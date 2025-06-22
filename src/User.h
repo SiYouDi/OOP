@@ -6,6 +6,12 @@
 #include <vector>
 #include "../sqlite3/sqlite3.h"
 #include "Goods.h"
+#include "Order.h"
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <iomanip>
+#include <sstream>
 
 class Viewer {
 public:
@@ -16,7 +22,9 @@ public:
     bool goodsShow(sqlite3* db);
     bool goodsFind(sqlite3* db, std::string text);
     bool goodsFind(sqlite3* db, int num);
-    Goods getGoodsById(sqlite3* db, int goodsId);
+    static Goods getGoodsByIdStatic(sqlite3 *db, int goodsId);
+    bool orderCreate(sqlite3 *db);
+    bool promotionCreate(sqlite3 *db);
 };
 
 class User : public Viewer {
@@ -30,6 +38,7 @@ public:
     std::string getUserName() const;
     bool checkPassword(const std::string& pwd) const;
     void changePassword(const std::string& newPwd);
+
 };
 
 class Admin : public User {
@@ -38,12 +47,17 @@ public:
     bool goodsAdd(sqlite3* db);
     bool goodsDel(sqlite3* db);
     bool goodsUpdate(sqlite3* db);
+    bool addPromotion(sqlite3 *db);
+    bool deletePromotion(sqlite3 *db);
+    bool assignPromotionToGoods(sqlite3 *db);
+    bool showPromotions(sqlite3 *db);
 };
 
 class Customer : public User {
 private:
     int money;
     std::vector<cartGoods> shoppingCart;
+    std::vector<Order> orders;
 
 public:
     Customer(std::string uname, std::string pwd);
@@ -53,7 +67,14 @@ public:
     bool cartSet(sqlite3* db, Goods goods, int setNum);
     bool cartDel(sqlite3* db, Goods goods);
     bool cartShow();
-    bool purchase(sqlite3* db);
+    bool cartClr(sqlite3 *db);
+    void purchase(sqlite3 *db);
+    bool cancelOrder(sqlite3 *db, int orderId);
+    void updateOrderStatus(sqlite3 *db, int orderId, OrderStatus status);
+    void showOrders(sqlite3 *db);
+    bool modifyOrderAddress(sqlite3 *db, int orderId, const std::string &newAddr);
+    bool deleteReceivedOrder(sqlite3 *db, int orderId);
+    void generatePurchaseStatistics(sqlite3* db);
 };
 
 #endif // USER_H

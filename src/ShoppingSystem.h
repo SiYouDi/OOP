@@ -5,6 +5,7 @@
 #include "User.h"
 #include "Goods.h"
 #include "../sqlite3/sqlite3.h"
+#include <limits>
 
 class ShoppingSystem
 {
@@ -24,6 +25,7 @@ public:
     void cusCartSet(Goods goods, int setNum);
     void cusCartDel(Goods goods);
     void cusCartShow();
+    void cusCartClr();
     void cusPur();
     void cusInvest();
     void cusFind();
@@ -34,9 +36,11 @@ public:
     void showCustomerMenu();
     void showCartMenu();
     void showAdminMenu();
+    void adminOrderManage();
     void cartMenu(int choice);
-
     void run();
+
+    void adminPromotionMenu();
 };
 
 #endif // SHOPPINGSYSTEM_H

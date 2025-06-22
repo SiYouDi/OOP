@@ -1,0 +1,3 @@
+D:/OOP/Lab/OOP/CMakeFiles/ShoppingSystem.dir
+D:/OOP/Lab/OOP/CMakeFiles/edit_cache.dir
+D:/OOP/Lab/OOP/CMakeFiles/rebuild_cache.dir
